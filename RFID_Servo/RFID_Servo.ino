@@ -8,6 +8,7 @@
 
 MFRC522 rfid(SS_PIN, RST_PIN);  // Crear instancia del lector RFID
 Servo servo;                    // Crear instancia del servo
+int apertura = 1;
 
 void setup() {
   Serial.begin(9600);  // Iniciar la comunicación serial
@@ -36,12 +37,9 @@ void loop() {
     
     // Verificar si el UID es correcto (sustituye "AABBCCDD" por el UID correcto)
     if (uid == "c9c68498" || uid == "f9f548b3") {
-      // Mover el servo a 90 grados
-      servo.write(90);
-      delay(1000);  // Esperar 1 segundo
-      
-      // Volver el servo a 0 grados
-      servo.write(0);
+      apertura += 1;
+      if(apertura % 2 == 0) servo.write(90);
+      else servo.write(0);
     }
     
     // Finalizar la lectura de la tarjeta RFID
